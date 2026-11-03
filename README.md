@@ -1,4 +1,7 @@
-<img align="right" width="180" src="assets/sticker.svg" alt="Doodle of Mason waving, with a cine camera, a robot agent and a rising chart" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/sticker-dark.svg" />
+  <img align="right" width="200" src="assets/sticker-light.svg" alt="Animated doodle of Mason waving and blinking, with a cine camera, a robot agent and a rising chart" />
+</picture>
 
 ### Hi, I'm Mason
 
