@@ -13,7 +13,7 @@ from xml.sax.saxutils import escape
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from theme import EMBER, THEMES, style  # noqa: E402
+from theme import THEMES, circle, style  # noqa: E402
 
 USER = "masonnguyen131"
 TZ = ZoneInfo("Australia/Melbourne")
@@ -66,6 +66,7 @@ def svg(c, today, stamp, doy, total, wx, golden, moon_phase, scene):
         f'<text x="{P + i * 380}" y="112" font-size="12" class="mu">{k}</text>'
         f'<text x="{P + i * 380}" y="142" font-size="22" class="b">{e(v)}</text>' for i, (k, v) in enumerate(cols))
     bar_w = W - 2 * P
+    u = len(scene) * 9.6  # rough width of the line at 20px, for the pen underline
     done = bar_w * doy / total
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
 <title>Call sheet for {e(today)}</title>
@@ -77,17 +78,17 @@ def svg(c, today, stamp, doy, total, wx, golden, moon_phase, scene):
 </g>
 <rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="6" fill="none" stroke="{c['border']}"/>
 <line x1="0" y1="56.5" x2="{W}" y2="56.5" stroke="{c['border']}"/>
-<circle cx="{P + 6}" cy="28" r="5" fill="{EMBER}"><animate attributeName="opacity" values="1;0.25;1" dur="2s" repeatCount="indefinite"/></circle>
+<circle cx="{P + 6}" cy="28" r="5" fill="{c['pen']}"><animate attributeName="opacity" values="1;0.25;1" dur="2s" repeatCount="indefinite"/></circle>
 <text x="{P + 20}" y="33" font-size="14"><tspan class="b">Call sheet</tspan><tspan class="mu">  ·  {e(today)}  ·  Melbourne, Australia</tspan></text>
 <text x="{W - P}" y="33" font-size="12" class="mu mono" text-anchor="end">printed {stamp} by daily-reel.yml</text>
 {stats}
 <line x1="0" y1="172.5" x2="{W}" y2="172.5" stroke="{c['border']}"/>
 <text x="{P}" y="206" font-size="12" class="mu">Today's line</text>
-<rect x="{P}" y="220" width="3" height="30" rx="1.5" fill="{EMBER}"/>
-<text x="{P + 16}" y="242" font-size="20">{e(scene)}</text>
+<text x="{P}" y="242" font-size="20">{e(scene)}</text>
+<path d="M{P - 2} 254C{P + u * 0.3:.0f} 249 {P + u * 0.7:.0f} 247 {P + u:.0f} 250" fill="none" stroke="{c['pen']}" stroke-width="2" stroke-linecap="round"/>
 <line x1="0" y1="272.5" x2="{W}" y2="272.5" stroke="{c['border']}"/>
 <rect x="{P}" y="290" width="{bar_w}" height="8" rx="4" fill="{d[0]}"/>
-<rect x="{P}" y="290" width="{done:.1f}" height="8" rx="4" fill="{d[3]}"><animate attributeName="width" from="0" to="{done:.1f}" dur="1.6s" fill="freeze"/></rect>
+<rect x="{P}" y="290" width="{done:.1f}" height="8" rx="4" fill="{c['pen']}"><animate attributeName="width" from="0" to="{done:.1f}" dur="1.6s" fill="freeze"/></rect>
 <text x="{P}" y="320" font-size="12" class="mu">Day {doy} of {total}</text>
 <text x="{W - P}" y="320" font-size="12" class="mu" text-anchor="end">{round(100 * doy / total)}% of {today[-4:]}</text>
 </svg>

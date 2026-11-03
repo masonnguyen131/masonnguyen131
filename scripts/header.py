@@ -3,7 +3,7 @@ Writes assets/header-{light,dark}.svg. Usage: python3 scripts/header.py"""
 import random
 from pathlib import Path
 
-from theme import THEMES, style
+from theme import THEMES, circle, style
 
 ROOT = Path(__file__).resolve().parent.parent
 COLS, ROWS, PITCH, CELL = 53, 7, 20, 16
@@ -59,7 +59,8 @@ def svg(c):
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
 <title>Mason Nguyen: applied AI and automation, Melbourne</title>
 <style>{style(c)}</style>
-<text x="8" y="22" font-size="16"><tspan class="b">5 of 5</tspan> automation POCs shipped to production in the last four months</text>
+<text x="10" y="23" font-size="16"><tspan class="b">5 of 5</tspan><tspan dx="12">automation POCs shipped to production in the last four months</tspan></text>
+{circle(0, 2, 64, 34, c["pen"])}
 <rect x="0.5" y="40.5" width="{W - 1}" height="{H - 41}" rx="6" fill="{c['bg']}" stroke="{c['border']}"/>
 {months}{days}
 {''.join(cells)}

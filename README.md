@@ -1,4 +1,4 @@
-<img align="right" width="200" src="assets/sticker.svg" alt="Sticker of Mason waving, with a little robot agent, a rising chart and sparkles" />
+<img align="right" width="200" src="assets/sticker.svg" alt="Doodle of Mason waving, with a cine camera, a robot agent and a rising chart" />
 
 ### Hi, I'm Mason
 

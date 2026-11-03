@@ -3,7 +3,7 @@ runs it twice per loop, once down the lean branch and once down the guarded one.
 Writes assets/flow-{light,dark}.svg. Usage: python3 scripts/flow.py"""
 from pathlib import Path
 
-from theme import EMBER, THEMES, style
+from theme import THEMES, style
 
 ROOT = Path(__file__).resolve().parent.parent
 PITCH, CELL, COLS, ROWS = 20, 16, 60, 16
@@ -56,13 +56,13 @@ def inside(cell):
     return False
 
 
-def flash(times, base):
-    """Discrete stroke animation: ember for a beat each time the snake's head arrives."""
+def flash(times, base, pen):
+    """Discrete stroke animation: the pen colour for a beat each time the snake's head arrives."""
     keys, vals = [0.0], [base]
     for t in sorted(times):
         a, b = t / len(LOOP), min((t + 10) / len(LOOP), 0.999)
         keys += [a, b]
-        vals += [EMBER, base]
+        vals += [pen, base]
     return (f'<animate attributeName="stroke" values="{";".join(vals)}" keyTimes="{";".join(f"{k:.4f}" for k in keys)}" '
             f'calcMode="discrete" dur="{T:.2f}s" repeatCount="indefinite"/>')
 
@@ -86,13 +86,13 @@ def svg(c):
         x, y = centre(col, row)
         hits = [t for t, cell in enumerate(LOOP) if cell == (col, row)]
         nodes.append(
-            f'<rect x="{x - w / 2}" y="{y - 26}" width="{w}" height="52" rx="6" fill="{c["bg"]}" stroke="{c["border"]}" stroke-width="1.5">{flash(hits, c["border"])}</rect>'
+            f'<rect x="{x - w / 2}" y="{y - 26}" width="{w}" height="52" rx="6" fill="{c["bg"]}" stroke="{c["border"]}" stroke-width="1.5">{flash(hits, c["border"], c["pen"])}</rect>'
             f'<text x="{x}" y="{y - 3}" font-size="14" class="b" text-anchor="middle">{title}</text>'
             f'<text x="{x}" y="{y + 15}" font-size="12" class="mu" text-anchor="middle">{sub}</text>')
     gx, gy = centre(GATE, MAIN)
     gate_hits = [t for t, cell in enumerate(LOOP) if cell == (GATE, MAIN)]
     nodes.append(
-        f'<rect x="{gx - 15}" y="{gy - 15}" width="30" height="30" rx="4" fill="{c["bg"]}" stroke="{c["border"]}" stroke-width="1.5" transform="rotate(45 {gx} {gy})">{flash(gate_hits, c["border"])}</rect>'
+        f'<rect x="{gx - 15}" y="{gy - 15}" width="30" height="30" rx="4" fill="{c["bg"]}" stroke="{c["border"]}" stroke-width="1.5" transform="rotate(45 {gx} {gy})">{flash(gate_hits, c["border"], c["pen"])}</rect>'
         f'<text x="{gx}" y="{gy + 5}" font-size="14" class="b" text-anchor="middle">?</text>'
         f'<text x="{gx - 30}" y="{gy - 26}" font-size="12" class="mu" text-anchor="end">Touches financial data?</text>'
         f'<text x="{gx + 18}" y="{centre(0, TOP + 2)[1] + 4}" font-size="12" class="mu mono">no</text>'

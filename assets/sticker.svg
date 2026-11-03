@@ -1,92 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 504 504" width="504" height="504">
-<title>Waving sticker with an agent buddy and a rising chart</title>
-<defs>
-  <clipPath id="burst"><path d="M259.6,67.0 L294.8,99.0 L342.2,94.8 L360.1,138.9 L404.7,155.7 L401.6,203.2 L434.5,237.7 L411.1,279.2 L425.8,324.5 L386.7,351.7 L380.3,398.9 L333.3,406.5 L307.0,446.2 L261.3,432.7 L220.4,457.0 L185.2,425.0 L137.8,429.2 L119.9,385.1 L75.3,368.3 L78.4,320.8 L45.5,286.3 L68.9,244.8 L54.2,199.5 L93.3,172.3 L99.7,125.1 L146.7,117.5 L173.0,77.8 L218.7,91.3 Z"/></clipPath>
-  <filter id="cut" x="-15%" y="-15%" width="130%" height="130%">
-    <feMorphology in="SourceAlpha" operator="dilate" radius="10" result="d"/>
-    <feFlood flood-color="#fffdf8"/><feComposite in2="d" operator="in" result="w"/>
-    <feGaussianBlur in="d" stdDeviation="6"/><feOffset dy="7" result="o"/>
-    <feFlood flood-color="#151413" flood-opacity="0.3"/><feComposite in2="o" operator="in" result="s"/>
-    <feMerge><feMergeNode in="s"/><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge>
-  </filter>
-</defs>
-<g filter="url(#cut)" stroke="#151413" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
-  <path d="M259.6,67.0 L294.8,99.0 L342.2,94.8 L360.1,138.9 L404.7,155.7 L401.6,203.2 L434.5,237.7 L411.1,279.2 L425.8,324.5 L386.7,351.7 L380.3,398.9 L333.3,406.5 L307.0,446.2 L261.3,432.7 L220.4,457.0 L185.2,425.0 L137.8,429.2 L119.9,385.1 L75.3,368.3 L78.4,320.8 L45.5,286.3 L68.9,244.8 L54.2,199.5 L93.3,172.3 L99.7,125.1 L146.7,117.5 L173.0,77.8 L218.7,91.3 Z" fill="#FF5B1F"/>
-  <path d="M288.6,120.1 L313.7,143.0 L345.4,155.2 L358.0,186.7 L381.3,211.5 L379.0,245.4 L389.2,277.8 L372.4,307.4 L367.5,341.0 L339.6,360.3 L320.6,388.5 L287.1,393.8 L257.8,410.9 L225.2,401.2 L191.4,403.9 L166.3,381.0 L134.6,368.8 L122.0,337.3 L98.7,312.5 L101.0,278.6 L90.8,246.2 L107.6,216.6 L112.5,183.0 L140.4,163.7 L159.4,135.5 L192.9,130.2 L222.2,113.1 L254.8,122.8 Z" fill="none" stroke="#FF8A5C" stroke-width="5" stroke-dasharray="2 16"/>
-
-  <!-- waving arm -->
-  <g><animateTransform attributeName="transform" type="rotate" values="-4 140 392;10 140 392;-4 140 392" dur="1.1s" repeatCount="indefinite"/>
-    <path d="M140 392 L90 330" stroke-width="46"/><path d="M140 392 L90 330" stroke="#fffdf8" stroke-width="34"/>
-    <path d="M90 330 L82 250" stroke-width="40"/><path d="M90 330 L82 250" stroke="#F2C29B" stroke-width="28"/>
-    <g fill="#F2C29B">
-      <rect x="50" y="176" width="18" height="50" rx="9" transform="rotate(-14 59 226)"/>
-      <rect x="66" y="164" width="18" height="58" rx="9" transform="rotate(-5 75 222)"/>
-      <rect x="84" y="164" width="18" height="58" rx="9" transform="rotate(5 93 222)"/>
-      <rect x="100" y="176" width="17" height="48" rx="8.5" transform="rotate(15 108 224)"/>
-      <path d="M108 236 C122 218 140 220 136 232 C132 244 120 252 108 254" />
-      <path d="M58 222 C56 250 68 266 86 266 C104 266 114 252 112 224 Z"/>
-    </g>
-    <path d="M62 222 H110" stroke="#F2C29B" stroke-width="10"/>
-    <path d="M36 170 Q28 190 34 210 M18 180 Q12 194 18 208" fill="none" stroke="#151413" stroke-width="5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+<title>Doodle of Mason waving, with a cine camera, a robot agent and a rising chart</title>
+<defs><clipPath id="card"><rect width="400" height="500"/></clipPath></defs>
+<rect width="400" height="500" fill="#ecece6"/>
+<g clip-path="url(#card)" fill="none" stroke="#161514" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M206 96C276 92 318 140 314 206C310 270 262 312 196 308C130 304 86 262 90 196C94 136 140 100 214 102" fill="#ffb3e6" stroke="none"/>
+  <g transform="translate(0 74)"><g>
+      <path d="M176 246C138 249 108 263 96 300C88 330 86 380 84 444"/>
+      <path d="M224 246C262 249 292 263 304 300C312 330 314 380 316 444"/>
+      <path d="M185 214L185 232M215 214L215 232"/>
+      <path d="M186 228L170 254L200 268L230 254L214 228"/>
+      <path d="M200 268L200 444"/>
+      <path d="M197 306a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M197 352a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M197 398a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>
+    </g><g>
+      <path d="M135 138C130 188 160 222 200 222C242 222 271 188 267 136"/>
+      <path d="M134 150C117 143 113 174 137 179M266 150C283 143 287 174 263 179"/>
+      <path d="M131 146C121 96 158 64 206 66C254 68 283 100 270 148"/>
+      <path d="M131 146C146 131 156 116 160 98C172 116 198 124 224 112C238 106 254 114 263 127C267 133 269 140 270 148"/>
+      <path d="M168 80C181 92 197 98 216 95M224 78C238 86 250 98 254 112M204 66C197 50 211 41 224 49"/>
+      <path d="M202 160C196 170 197 177 205 177"/>
+      <g>
+        <path d="M226 150L226 160" stroke-width="4"/>
+        <path d="M167 157C172 161 180 161 185 156"/>
+        <path d="M164 137C170 132 180 132 186 136M216 136C222 132 232 132 238 137"/>
+        <path d="M184 190C192 201 210 201 218 189"/>
+      </g>
+    </g><g>
+      <path d="M120 318C124 360 126 400 126 444"/>
+      <path d="M262 258C284 248 300 232 307 213M300 282C320 270 334 252 340 226"/>
+      <g>
+        <path d="M307 213C313 196 316 178 318 156M340 226C348 206 352 182 352 158"/>
+        <path d="M316 170C328 176 342 177 354 172"/>
+        <path fill="#ecece6" d="M318 155C316 143 308 135 304 125C301 117 308 112 314 118L321 127L320 95C320 87 330 87 330 95L330 119L331 87C331 78 342 78 342 87L341 119L343 92C344 84 353 85 352 93L350 121L353 104C355 97 363 99 361 106L357 140C356 148 354 153 352 158"/>
+        <path d="M372 94C381 103 384 115 381 127M292 90C285 99 284 110 287 121"/>
+      </g>
+    </g></g>
+  <g transform="translate(30 34) rotate(-8)">
+    <path d="M14 40C14 34 18 32 24 32L82 32C88 32 92 34 92 40L92 70C92 76 88 78 82 78L24 78C18 78 14 76 14 70Z" fill="#ecece6"/>
+    <path d="M34 30a13 13 0 1 0 0.1 0M70 26a16 16 0 1 0 0.1 0" fill="#ecece6"/>
+    <path d="M92 46L114 36L114 74L92 64"/>
+    <path d="M26 44L40 44"/>
+    <path d="M78 46a4 4 0 1 0 0.1 0" fill="#4f2bff"/>
   </g>
-
-  <!-- body, clipped to the burst -->
-  <g clip-path="url(#burst)">
-    <path d="M206 318 V372 L230 396 L254 372 V318 Z" fill="#E4AD84"/>
-    <path d="M90 500 C96 410 140 374 230 368 C320 374 364 410 370 500 Z" fill="#fffdf8"/>
-    <path d="M230 392 L194 360 L180 398 L218 412 Z M230 392 L266 360 L280 398 L242 412 Z" fill="#fffdf8"/>
-    <path d="M230 412 V500" fill="none" stroke-width="4"/>
-    <circle cx="230" cy="436" r="4" fill="#151413" stroke="none"/><circle cx="230" cy="466" r="4" fill="#151413" stroke="none"/>
+  <g transform="translate(296 40)">
+    <path d="M4 4L4 76L84 76"/>
+    <path d="M12 64L30 50L46 56L74 22M74 22L60 24M74 22L72 36"/>
   </g>
-
-  <!-- head -->
-  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0" dur="2.6s" repeatCount="indefinite"/>
-  <g transform="rotate(-7 230 240)">
-    <ellipse cx="150" cy="252" rx="17" ry="25" fill="#F2C29B"/>
-    <ellipse cx="310" cy="252" rx="17" ry="25" fill="#F2C29B"/>
-    <path d="M154 215 C152 290 182 336 230 338 C278 336 308 290 306 215 C302 170 272 150 230 150 C188 150 158 170 154 215 Z" fill="#F2C29B"/>
-    <path d="M140 244 C120 170 150 102 232 98 C314 96 344 162 320 244 C316 216 308 198 298 190 C284 202 268 200 256 186 C240 202 214 204 196 190 C182 202 164 200 156 188 C148 204 144 222 140 244 Z" fill="#151413"/>
-    <path d="M232 100 C224 78 240 62 262 66 C246 72 242 84 248 98 Z" fill="#151413"/>
-    <path d="M178 160 C198 148 218 132 232 112" fill="none" stroke="#3a3936" stroke-width="4"/>
-    <path d="M180 212 Q196 204 212 210 M250 204 Q266 194 284 202" fill="none" stroke-width="7"/>
-    <path d="M182 240 Q196 226 210 240" fill="none" stroke-width="6"/>
-    <ellipse cx="266" cy="238" rx="10" ry="13" fill="#151413"><animate attributeName="ry" values="13;13;1.5;13;13" keyTimes="0;0.9;0.94;0.98;1" dur="3.6s" repeatCount="indefinite"/></ellipse><circle cx="270" cy="233" r="3.5" fill="#fffdf8" stroke="none"><animate attributeName="opacity" values="1;1;0;1;1" keyTimes="0;0.9;0.94;0.98;1" dur="3.6s" repeatCount="indefinite"/></circle>
-    <path d="M232 250 Q226 268 238 272" fill="none" stroke-width="5"/>
-    <path d="M194 286 Q232 330 272 282 Q232 296 194 286 Z" fill="#151413"/>
-    <path d="M214 304 Q234 296 254 302 Q236 318 214 304 Z" fill="#FF7A57" stroke="none"/>
-    <g stroke="none" fill="#FF5B1F" opacity="0.32"><ellipse cx="176" cy="270" rx="15" ry="9"/><ellipse cx="290" cy="266" rx="15" ry="9"/></g>
+  <g transform="translate(38 392) rotate(-8)">
+    <path d="M10 0C10 -10 16 -14 30 -14L50 -14C64 -14 70 -10 70 0L70 28C70 38 64 42 50 42L30 42C16 42 10 38 10 28Z" fill="#ecece6"/>
+    <path d="M40 -14L40 -26M40 -32a5 5 0 1 0 0.1 0" fill="#4f2bff"/>
+    <path d="M26 14C29 9 34 9 37 14M44 14C47 9 52 9 55 14"/>
+    <path d="M33 27C37 31 44 31 48 27"/>
   </g>
-  </g>
-
-  <!-- agent buddy -->
-  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 -10;0 0" dur="1.8s" repeatCount="indefinite"/>
-    <path d="M396 108 V84" fill="none"/>
-    <circle cx="396" cy="76" r="10" fill="#FF5B1F"><animate attributeName="fill" values="#FF5B1F;#FFC94A;#FF5B1F" dur="0.9s" repeatCount="indefinite"/></circle>
-    <rect x="348" y="108" width="96" height="78" rx="22" fill="#EDE8DF"/>
-    <rect x="340" y="132" width="10" height="26" rx="4" fill="#FF5B1F"/><rect x="442" y="132" width="10" height="26" rx="4" fill="#FF5B1F"/>
-    <rect x="362" y="122" width="68" height="48" rx="12" fill="#151413"/>
-    <path d="M374 150 Q382 138 390 150 M402 150 Q410 138 418 150" fill="none" stroke="#FFC94A" stroke-width="5"><animate attributeName="opacity" values="1;1;0;1;1" keyTimes="0;0.86;0.9;0.94;1" dur="4.4s" repeatCount="indefinite"/></path>
-  </g>
-
-  <!-- lightning -->
-  <path d="M410 300 L372 360 H400 L384 412 L440 338 H410 L428 300 Z" fill="#FFC94A">
-    <animateTransform attributeName="transform" type="rotate" values="-6 406 356;6 406 356;-6 406 356" dur="1.4s" repeatCount="indefinite"/>
-  </path>
-
-  <path d="M66 100 Q69.6 116.4 86 120 Q69.6 123.6 66 140 Q62.4 123.6 46 120 Q62.4 116.4 66 100 Z" fill="#FFC94A" stroke="#151413" stroke-width="4" stroke-linejoin="round"><animateTransform attributeName="transform" type="rotate" values="0 66 120;18 66 120;0 66 120" dur="2.4s" begin="0s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="2.4s" begin="0s" repeatCount="indefinite"/></path>
-  <path d="M318 30 Q320.52 41.48 332 44 Q320.52 46.52 318 58 Q315.48 46.52 304 44 Q315.48 41.48 318 30 Z" fill="#FFC94A" stroke="#151413" stroke-width="4" stroke-linejoin="round"><animateTransform attributeName="transform" type="rotate" values="0 318 44;18 318 44;0 318 44" dur="2.4s" begin="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="2.4s" begin="0.8s" repeatCount="indefinite"/></path>
-  <path d="M452 226 Q454.16 235.84 464 238 Q454.16 240.16 452 250 Q449.84 240.16 440 238 Q449.84 235.84 452 226 Z" fill="#FFC94A" stroke="#151413" stroke-width="4" stroke-linejoin="round"><animateTransform attributeName="transform" type="rotate" values="0 452 238;18 452 238;0 452 238" dur="2.4s" begin="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="2.4s" begin="1.6s" repeatCount="indefinite"/></path>
-
-  <!-- rising chart badge -->
-  <g transform="rotate(-8 136 420)">
-    <rect x="66" y="382" width="140" height="76" rx="20" fill="#151413"/>
-    <g stroke="none">
-      <rect x="84" y="426" width="18" height="14" rx="4" fill="#fffdf8"><animate attributeName="height" values="14;22;14" dur="2.2s" repeatCount="indefinite"/><animate attributeName="y" values="426;418;426" dur="2.2s" repeatCount="indefinite"/></rect>
-      <rect x="110" y="416" width="18" height="24" rx="4" fill="#FFC94A"><animate attributeName="height" values="24;34;24" dur="2.2s" begin="0.2s" repeatCount="indefinite"/><animate attributeName="y" values="416;406;416" dur="2.2s" begin="0.2s" repeatCount="indefinite"/></rect>
-      <rect x="136" y="404" width="18" height="36" rx="4" fill="#FF5B1F"><animate attributeName="height" values="36;46;36" dur="2.2s" begin="0.4s" repeatCount="indefinite"/><animate attributeName="y" values="404;394;404" dur="2.2s" begin="0.4s" repeatCount="indefinite"/></rect>
-    </g>
-    <path d="M166 438 V408 M156 418 L166 406 L176 418" fill="none" stroke="#FFC94A" stroke-width="5"/>
-    <circle cx="190" cy="398" r="6" fill="#FF5B1F" stroke="none"><animate attributeName="opacity" values="1;0.25;1" dur="1.1s" repeatCount="indefinite"/></circle>
-  </g>
+  <path d="M366 316C368 324 368 324 376 326C368 328 368 328 366 336C364 328 364 328 356 326C364 324 364 324 366 316Z"/>
+  <path d="M56 196C57 201 57 201 62 202C57 203 57 203 56 208C55 203 55 203 50 202C55 201 55 201 56 196Z"/>
 </g>
 </svg>
