@@ -1,9 +1,8 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,100:2C5364&height=170&section=header&text=Mason%20Nguyen&fontSize=46&fontColor=ffffff&fontAlignY=40&animation=fadeIn" alt="Mason Nguyen" width="100%" />
-</p>
-
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=18&duration=2800&pause=1400&color=5BA4B8&center=true&vCenter=true&width=520&lines=Applied+AI+and+automation+for+finance+teams;Agentic+workflows+with+guardrails;From+discovery+to+production" alt="Applied AI and automation for finance teams" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg" />
+    <img src="assets/header-light.svg" alt="Mason Nguyen: Applied AI and automation for finance teams" width="100%" />
+  </picture>
 </p>
 
 <p align="center">
@@ -34,11 +33,27 @@ At **Redbridge Capital**, a Melbourne investment manager for the Susan McKinnon 
 
 <br />
 
+### How I work
+
+```mermaid
+flowchart LR
+    start((Start)) --> discover["Discover<br/>sit with the people<br/>closest to the work"]
+    discover --> map["Map<br/>BPMN as-is and to-be"]
+    map --> demo["Demo<br/>live POC before<br/>any build"]
+    demo --> risk{"Touches<br/>financial data?"}
+    risk -- no --> light["Ship lean<br/>n8n or Power Platform"]
+    risk -- yes --> guarded["Ship guarded<br/>MCP agent with tests,<br/>telemetry, guardrails"]
+    light --> measure["Measure<br/>hours returned"]
+    guarded --> measure
+    measure --> live((Live))
+```
+
 ### Stack
 
-<p>
-  <img src="https://skillicons.dev/icons?i=py,postgres,aws,gcp,ts,react,nodejs,git&theme=dark" alt="Python, PostgreSQL, AWS, GCP, TypeScript, React, Node.js, Git" />
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=py,postgres,aws,gcp,ts,react,nodejs,git&theme=dark" />
+  <img src="https://skillicons.dev/icons?i=py,postgres,aws,gcp,ts,react,nodejs,git&theme=light" alt="Python, PostgreSQL, AWS, GCP, TypeScript, React, Node.js, Git" />
+</picture>
 
 Claude Code &nbsp;·&nbsp; MCP agents &nbsp;·&nbsp; n8n &nbsp;·&nbsp; Power Platform &nbsp;·&nbsp; Copilot Studio &nbsp;·&nbsp; Power BI &nbsp;·&nbsp; BigQuery &nbsp;·&nbsp; dbt &nbsp;·&nbsp; SQL
 
@@ -60,8 +75,4 @@ Claude Code &nbsp;·&nbsp; MCP agents &nbsp;·&nbsp; n8n &nbsp;·&nbsp; Power Pl
 
 <p align="center">
   Working on AI transformation, fundraising or growth? <a href="https://www.linkedin.com/in/masonnguyen13/">Let's talk.</a>
-</p>
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:2C5364,100:0F2027&height=90&section=footer&animation=fadeIn" alt="" width="100%" />
 </p>
