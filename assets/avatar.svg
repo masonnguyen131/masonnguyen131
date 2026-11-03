@@ -13,48 +13,90 @@
       <circle cx="200" cy="200" r="166" fill="none" stroke="#151413" stroke-width="6"/>
     </g>
     <g opacity="0"><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.475;0.975" calcMode="discrete" dur="8s" repeatCount="indefinite"/>
-      <svg x="0" y="0" viewBox="0 0 400 400" width="400" height="400">
-  
-  <defs>
-    <clipPath id="disc"><circle cx="200" cy="200" r="166"/></clipPath>
-    <filter id="drop" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#151413" flood-opacity="0.28"/></filter>
-  </defs>
-  <g filter="url(#drop)"><circle cx="200" cy="200" r="182" fill="#fffdf8"/></g>
-  <circle cx="200" cy="200" r="166" fill="#FF5B1F"/>
-  <g clip-path="url(#disc)" stroke="#151413" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
-    <!-- rays -->
-    <g stroke="#FFB08F" stroke-width="10" opacity="0.6">
-      <path d="M200 30 V60 M80 80 l22 22 M320 80 l-22 22 M40 200 h30 M360 200 h-30"/>
+      <svg x="0" y="0" viewBox="-12 -12 504 504" width="400" height="400">
+
+<defs>
+  <clipPath id="burst"><path d="M259.6,67.0 L294.8,99.0 L342.2,94.8 L360.1,138.9 L404.7,155.7 L401.6,203.2 L434.5,237.7 L411.1,279.2 L425.8,324.5 L386.7,351.7 L380.3,398.9 L333.3,406.5 L307.0,446.2 L261.3,432.7 L220.4,457.0 L185.2,425.0 L137.8,429.2 L119.9,385.1 L75.3,368.3 L78.4,320.8 L45.5,286.3 L68.9,244.8 L54.2,199.5 L93.3,172.3 L99.7,125.1 L146.7,117.5 L173.0,77.8 L218.7,91.3 Z"/></clipPath>
+  <filter id="cut" x="-15%" y="-15%" width="130%" height="130%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="10" result="d"/>
+    <feFlood flood-color="#fffdf8"/><feComposite in2="d" operator="in" result="w"/>
+    <feGaussianBlur in="d" stdDeviation="6"/><feOffset dy="7" result="o"/>
+    <feFlood flood-color="#151413" flood-opacity="0.3"/><feComposite in2="o" operator="in" result="s"/>
+    <feMerge><feMergeNode in="s"/><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<g filter="url(#cut)" stroke="#151413" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M259.6,67.0 L294.8,99.0 L342.2,94.8 L360.1,138.9 L404.7,155.7 L401.6,203.2 L434.5,237.7 L411.1,279.2 L425.8,324.5 L386.7,351.7 L380.3,398.9 L333.3,406.5 L307.0,446.2 L261.3,432.7 L220.4,457.0 L185.2,425.0 L137.8,429.2 L119.9,385.1 L75.3,368.3 L78.4,320.8 L45.5,286.3 L68.9,244.8 L54.2,199.5 L93.3,172.3 L99.7,125.1 L146.7,117.5 L173.0,77.8 L218.7,91.3 Z" fill="#FF5B1F"/>
+  <path d="M288.6,120.1 L313.7,143.0 L345.4,155.2 L358.0,186.7 L381.3,211.5 L379.0,245.4 L389.2,277.8 L372.4,307.4 L367.5,341.0 L339.6,360.3 L320.6,388.5 L287.1,393.8 L257.8,410.9 L225.2,401.2 L191.4,403.9 L166.3,381.0 L134.6,368.8 L122.0,337.3 L98.7,312.5 L101.0,278.6 L90.8,246.2 L107.6,216.6 L112.5,183.0 L140.4,163.7 L159.4,135.5 L192.9,130.2 L222.2,113.1 L254.8,122.8 Z" fill="none" stroke="#FF8A5C" stroke-width="5" stroke-dasharray="2 16"/>
+
+  <!-- waving arm -->
+  <g><animateTransform attributeName="transform" type="rotate" values="-4 140 392;10 140 392;-4 140 392" dur="1.1s" repeatCount="indefinite"/>
+    <path d="M140 392 L90 330" stroke-width="46"/><path d="M140 392 L90 330" stroke="#fffdf8" stroke-width="34"/>
+    <path d="M90 330 L82 250" stroke-width="40"/><path d="M90 330 L82 250" stroke="#F2C29B" stroke-width="28"/>
+    <g fill="#F2C29B">
+      <rect x="50" y="176" width="18" height="50" rx="9" transform="rotate(-14 59 226)"/>
+      <rect x="66" y="164" width="18" height="58" rx="9" transform="rotate(-5 75 222)"/>
+      <rect x="84" y="164" width="18" height="58" rx="9" transform="rotate(5 93 222)"/>
+      <rect x="100" y="176" width="17" height="48" rx="8.5" transform="rotate(15 108 224)"/>
+      <path d="M108 236 C122 218 140 220 136 232 C132 244 120 252 108 254" />
+      <path d="M58 222 C56 250 68 266 86 266 C104 266 114 252 112 224 Z"/>
     </g>
-    <!-- shirt -->
-    <path d="M70 420 C80 345 120 318 200 312 C280 318 320 345 330 420 Z" fill="#fffdf8"/>
-    <path d="M200 330 L162 300 L150 336 L186 352 Z M200 330 L238 300 L250 336 L214 352 Z" fill="#fffdf8"/>
-    <!-- neck -->
-    <path d="M172 262 V306 L200 332 L228 306 V262 Z" fill="#EDB48B"/>
-    <!-- ears -->
-    <ellipse cx="122" cy="206" rx="15" ry="22" fill="#F2C29B"/>
-    <ellipse cx="278" cy="206" rx="15" ry="22" fill="#F2C29B"/>
-    <!-- face -->
-    <path d="M126 170 C124 240 150 290 200 292 C250 290 276 240 274 170 C270 130 240 110 200 110 C160 110 130 130 126 170 Z" fill="#F2C29B"/>
-    <!-- hair -->
-    <path d="M114 200 C98 136 126 72 200 68 C274 66 306 120 288 200 C284 178 278 164 268 154 C254 164 240 162 228 152 C214 164 194 166 178 156 C164 166 148 164 140 152 C130 164 120 180 114 200 Z" fill="#151413"/>
-    <path d="M160 134 C184 126 204 112 220 92" fill="none" stroke="#3a3936" stroke-width="4"/>
-    <!-- brows -->
-    <path d="M152 176 Q168 170 184 175 M216 175 Q232 170 248 176" fill="none" stroke-width="7"/>
-    <!-- smiling eyes -->
-    <path d="M156 202 Q168 192 180 202 M220 202 Q232 192 244 202" fill="none" stroke-width="6"/>
-    <!-- nose and smile -->
-    <path d="M200 210 Q195 228 202 234" fill="none" stroke-width="5"/>
-    <path d="M178 254 Q200 270 224 252" fill="none" stroke-width="6"/>
-    <!-- blush -->
-    <g stroke="none" fill="#FF5B1F" opacity="0.28"><ellipse cx="156" cy="232" rx="14" ry="8"/><ellipse cx="246" cy="232" rx="14" ry="8"/></g>
+    <path d="M62 222 H110" stroke="#F2C29B" stroke-width="10"/>
+    <path d="M36 170 Q28 190 34 210 M18 180 Q12 194 18 208" fill="none" stroke="#151413" stroke-width="5"/>
   </g>
-  <circle cx="200" cy="200" r="166" fill="none" stroke="#151413" stroke-width="6"/>
-  <!-- signature -->
-  <g transform="rotate(-8 300 330)">
-    <rect x="236" y="306" width="132" height="46" rx="23" fill="#151413" stroke="#fffdf8" stroke-width="10" paint-order="stroke"/>
-    <text x="302" y="337" text-anchor="middle" font-family="'Brush Script MT','Snell Roundhand',cursive" font-size="30" fill="#fffdf8">Mason</text>
+
+  <!-- body, clipped to the burst -->
+  <g clip-path="url(#burst)">
+    <path d="M206 318 V372 L230 396 L254 372 V318 Z" fill="#E4AD84"/>
+    <path d="M90 500 C96 410 140 374 230 368 C320 374 364 410 370 500 Z" fill="#fffdf8"/>
+    <path d="M230 392 L194 360 L180 398 L218 412 Z M230 392 L266 360 L280 398 L242 412 Z" fill="#fffdf8"/>
+    <path d="M230 412 V500" fill="none" stroke-width="4"/>
+    <circle cx="230" cy="436" r="4" fill="#151413" stroke="none"/><circle cx="230" cy="466" r="4" fill="#151413" stroke="none"/>
   </g>
+
+  <!-- head -->
+  <g transform="rotate(-7 230 240)">
+    <ellipse cx="150" cy="252" rx="17" ry="25" fill="#F2C29B"/>
+    <ellipse cx="310" cy="252" rx="17" ry="25" fill="#F2C29B"/>
+    <path d="M154 215 C152 290 182 336 230 338 C278 336 308 290 306 215 C302 170 272 150 230 150 C188 150 158 170 154 215 Z" fill="#F2C29B"/>
+    <path d="M140 244 C120 170 150 102 232 98 C314 96 344 162 320 244 C316 216 308 198 298 190 C284 202 268 200 256 186 C240 202 214 204 196 190 C182 202 164 200 156 188 C148 204 144 222 140 244 Z" fill="#151413"/>
+    <path d="M232 100 C224 78 240 62 262 66 C246 72 242 84 248 98 Z" fill="#151413"/>
+    <path d="M178 160 C198 148 218 132 232 112" fill="none" stroke="#3a3936" stroke-width="4"/>
+    <path d="M180 212 Q196 204 212 210 M250 204 Q266 194 284 202" fill="none" stroke-width="7"/>
+    <path d="M182 240 Q196 226 210 240" fill="none" stroke-width="6"/>
+    <ellipse cx="266" cy="238" rx="10" ry="13" fill="#151413"/><circle cx="270" cy="233" r="3.5" fill="#fffdf8" stroke="none"/>
+    <path d="M232 250 Q226 268 238 272" fill="none" stroke-width="5"/>
+    <path d="M194 286 Q232 330 272 282 Q232 296 194 286 Z" fill="#151413"/>
+    <path d="M214 304 Q234 296 254 302 Q236 318 214 304 Z" fill="#FF7A57" stroke="none"/>
+    <g stroke="none" fill="#FF5B1F" opacity="0.32"><ellipse cx="176" cy="270" rx="15" ry="9"/><ellipse cx="290" cy="266" rx="15" ry="9"/></g>
+  </g>
+
+  <!-- agent buddy -->
+  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 -10;0 0" dur="1.8s" repeatCount="indefinite"/>
+    <path d="M396 108 V84" fill="none"/>
+    <circle cx="396" cy="76" r="10" fill="#FF5B1F"><animate attributeName="fill" values="#FF5B1F;#FFC94A;#FF5B1F" dur="0.9s" repeatCount="indefinite"/></circle>
+    <rect x="348" y="108" width="96" height="78" rx="22" fill="#EDE8DF"/>
+    <rect x="340" y="132" width="10" height="26" rx="4" fill="#FF5B1F"/><rect x="442" y="132" width="10" height="26" rx="4" fill="#FF5B1F"/>
+    <rect x="362" y="122" width="68" height="48" rx="12" fill="#151413"/>
+    <path d="M374 150 Q382 138 390 150 M402 150 Q410 138 418 150" fill="none" stroke="#FFC94A" stroke-width="5"/>
+    <path d="M366 192 Q380 214 398 204" fill="none" stroke="#EDE8DF" stroke-width="0"/>
+  </g>
+
+  <!-- lightning -->
+  <path d="M410 300 L372 360 H400 L384 412 L440 338 H410 L428 300 Z" fill="#FFC94A">
+    <animateTransform attributeName="transform" type="rotate" values="-6 406 356;6 406 356;-6 406 356" dur="1.4s" repeatCount="indefinite"/>
+  </path>
+
+  <path d="M66 100 Q69.6 116.4 86 120 Q69.6 123.6 66 140 Q62.4 123.6 46 120 Q62.4 116.4 66 100 Z" fill="#FFC94A" stroke="#151413" stroke-width="4" stroke-linejoin="round"><animateTransform attributeName="transform" type="rotate" values="0 66 120;18 66 120;0 66 120" dur="2.4s" begin="0s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="2.4s" begin="0s" repeatCount="indefinite"/></path>
+  <path d="M318 30 Q320.52 41.48 332 44 Q320.52 46.52 318 58 Q315.48 46.52 304 44 Q315.48 41.48 318 30 Z" fill="#FFC94A" stroke="#151413" stroke-width="4" stroke-linejoin="round"><animateTransform attributeName="transform" type="rotate" values="0 318 44;18 318 44;0 318 44" dur="2.4s" begin="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="2.4s" begin="0.8s" repeatCount="indefinite"/></path>
+  <path d="M452 226 Q454.16 235.84 464 238 Q454.16 240.16 452 250 Q449.84 240.16 440 238 Q449.84 235.84 452 226 Z" fill="#FFC94A" stroke="#151413" stroke-width="4" stroke-linejoin="round"><animateTransform attributeName="transform" type="rotate" values="0 452 238;18 452 238;0 452 238" dur="2.4s" begin="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="2.4s" begin="1.6s" repeatCount="indefinite"/></path>
+
+  <!-- signature tag -->
+  <g transform="rotate(-6 150 440)">
+    <rect x="70" y="412" width="168" height="54" rx="27" fill="#151413"/>
+    <text x="154" y="449" text-anchor="middle" stroke="none" font-family="'Snell Roundhand','Brush Script MT',cursive" font-weight="700" font-size="34" fill="#fffdf8">Mason</text>
+  </g>
+</g>
 </svg>
 
     </g>

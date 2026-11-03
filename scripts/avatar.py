@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 photo = base64.b64encode((ROOT / "assets/photo.jpg").read_bytes()).decode()
 sticker = (ROOT / "assets/sticker.svg").read_text()
 sticker = re.sub(r"<title>.*?</title>", "", sticker).replace('<svg xmlns="http://www.w3.org/2000/svg"', '<svg x="0" y="0"', 1)
+sticker = re.sub(r'width="\d+" height="\d+"', 'width="400" height="400"', sticker, count=1)
 
 T = 8  # photo 0 to 3.6s, turn, sticker 4 to 7.6s, turn back
 SQUASH = 'values="1 1;1 1;0.02 1;1 1;1 1;0.02 1;1 1" keyTimes="0;0.45;0.475;0.5;0.95;0.975;1"'
