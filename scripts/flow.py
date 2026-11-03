@@ -1,109 +1,58 @@
-"""How the work moves: the BPMN flow drawn on a contribution grid, with a snake that
-runs it twice per loop, once down the lean branch and once down the guarded one.
+"""How the work moves: discover, map, prove, then a gateway on financial data that ships
+lean or guarded, and measure. Two violet pulses run the lean and the guarded route in turn.
 Writes assets/flow-{light,dark}.svg. Usage: python3 scripts/flow.py"""
 from pathlib import Path
 
 from theme import THEMES, style
 
 ROOT = Path(__file__).resolve().parent.parent
-PITCH, CELL, COLS, ROWS = 20, 16, 60, 16
-W, H = COLS * PITCH, ROWS * PITCH
-STEP = 0.11  # seconds per cell, like the snake's pace
-SNAKE = [4, 4, 3, 3, 2, 2, 1]  # head to tail, as contribution levels
-
-MAIN, TOP, BOT = 8, 3, 13
-GATE = 37
-# name: (col, row, width, title, subtitle)
-NODES = {
-    "discover": (4, MAIN, 140, "Discover", "sit with the team"),
-    "map": (14, MAIN, 150, "Map in BPMN", "as-is to to-be"),
-    "prove": (26, MAIN, 170, "Prove it live", "POC before the build"),
-    "lean": (47, TOP, 190, "Ship lean", "n8n · Power Platform"),
-    "guarded": (47, BOT, 230, "Ship guarded", "MCP agents · tests · telemetry"),
-    "measure": (55, MAIN, 150, "Measure", "hours returned"),
-}
+W, H = 1200, 340
+MID, TOP, BOT = 170, 92, 248
+GATE, END = 630, 1100
+# x, title, detail: the steps on the main line
+STEPS = [(90, "Discover", "sit with the team"), (270, "Map", "BPMN as-is, to-be"),
+         (450, "Prove", "live POC first"), (END, "Measure", "hours returned")]
 
 
-def centre(col, row):
-    return col * PITCH + PITCH / 2, row * PITCH + PITCH / 2
+def lane(y):
+    """Main line to the gateway, a soft curve out to the lane at y, and back into Measure."""
+    return (f"M90 {MID}H{GATE}C{GATE + 40} {MID} {GATE + 30} {y} {GATE + 80} {y}"
+            f"H{END - 170}C{END - 120} {y} {END - 130} {MID} {END - 90} {MID}H{END}")
 
 
-def walk(points):
-    """Cells visited moving orthogonally through the given (col, row) corners."""
-    cells = [points[0]]
-    for (c1, r1) in points[1:]:
-        c0, r0 = cells[-1]
-        while (c0, r0) != (c1, r1):
-            c0 += (c1 > c0) - (c1 < c0)
-            if c0 == cells[-1][0]:
-                r0 += (r1 > r0) - (r1 < r0)
-            cells.append((c0, r0))
-    return cells
-
-
-LEAN = walk([(4, MAIN), (GATE, MAIN), (GATE, TOP), (55, TOP), (55, MAIN)])
-GUARD = walk([(4, MAIN), (GATE, MAIN), (GATE, BOT), (55, BOT), (55, MAIN)])
-LOOP = LEAN + GUARD
-T = len(LOOP) * STEP
-
-
-def inside(cell):
-    x, y = centre(*cell)
-    for col, row, w, *_ in NODES.values():
-        nx, ny = centre(col, row)
-        if abs(x - nx) < w / 2 + 4 and abs(y - ny) < 30:
-            return True
-    return False
-
-
-def flash(times, base, pen):
-    """Discrete stroke animation: the pen colour for a beat each time the snake's head arrives."""
-    keys, vals = [0.0], [base]
-    for t in sorted(times):
-        a, b = t / len(LOOP), min((t + 10) / len(LOOP), 0.999)
-        keys += [a, b]
-        vals += [pen, base]
-    return (f'<animate attributeName="stroke" values="{";".join(vals)}" keyTimes="{";".join(f"{k:.4f}" for k in keys)}" '
-            f'calcMode="discrete" dur="{T:.2f}s" repeatCount="indefinite"/>')
+LEAN, GUARD = lane(TOP), lane(BOT)
+T = 7  # seconds per route
 
 
 def svg(c):
-    d = c["dots"]
-    track = set(LEAN) | set(GUARD)
-    grid = "".join(
-        f'<rect x="{col * PITCH + 2}" y="{row * PITCH + 2}" width="{CELL}" height="{CELL}" rx="3" fill="{d[1] if (col, row) in track else d[0]}"/>'
-        for col in range(COLS) for row in range(ROWS) if not inside((col, row)))
-
-    snake = []
-    for i, lv in reversed(list(enumerate(SNAKE))):
-        seq = [LOOP[(t - i) % len(LOOP)] for t in range(len(LOOP))]
-        vals = ";".join(f"{col * PITCH + 2} {row * PITCH + 2}" for col, row in seq)
-        snake.append(f'<rect width="{CELL}" height="{CELL}" rx="3" fill="{d[lv]}">'
-                     f'<animateTransform attributeName="transform" type="translate" values="{vals}" calcMode="discrete" dur="{T:.2f}s" repeatCount="indefinite"/></rect>')
-
-    nodes = []
-    for key, (col, row, w, title, sub) in NODES.items():
-        x, y = centre(col, row)
-        hits = [t for t, cell in enumerate(LOOP) if cell == (col, row)]
-        nodes.append(
-            f'<rect x="{x - w / 2}" y="{y - 26}" width="{w}" height="52" rx="6" fill="{c["bg"]}" stroke="{c["border"]}" stroke-width="1.5">{flash(hits, c["border"], c["pen"])}</rect>'
-            f'<text x="{x}" y="{y - 3}" font-size="14" class="b" text-anchor="middle">{title}</text>'
-            f'<text x="{x}" y="{y + 15}" font-size="12" class="mu" text-anchor="middle">{sub}</text>')
-    gx, gy = centre(GATE, MAIN)
-    gate_hits = [t for t, cell in enumerate(LOOP) if cell == (GATE, MAIN)]
-    nodes.append(
-        f'<rect x="{gx - 15}" y="{gy - 15}" width="30" height="30" rx="4" fill="{c["bg"]}" stroke="{c["border"]}" stroke-width="1.5" transform="rotate(45 {gx} {gy})">{flash(gate_hits, c["border"], c["pen"])}</rect>'
-        f'<text x="{gx}" y="{gy + 5}" font-size="14" class="b" text-anchor="middle">?</text>'
-        f'<text x="{gx - 30}" y="{gy - 26}" font-size="12" class="mu" text-anchor="end">Touches financial data?</text>'
-        f'<text x="{gx + 18}" y="{centre(0, TOP + 2)[1] + 4}" font-size="12" class="mu mono">no</text>'
-        f'<text x="{gx + 18}" y="{centre(0, BOT - 2)[1] + 4}" font-size="12" class="mu mono">yes</text>')
-
+    pen, line = c["pen"], c["line"]
+    steps = "".join(
+        f'<circle cx="{x}" cy="{MID}" r="7" fill="{pen}"/>'
+        f'<text x="{x}" y="{MID + 42}" font-size="22" class="b" text-anchor="middle">{title}</text>'
+        f'<text x="{x}" y="{MID + 68}" font-size="15" class="mu mono" text-anchor="middle">{detail}</text>'
+        for x, title, detail in STEPS)
+    mid = (GATE + END - 90) / 2
+    branches = (
+        f'<text x="{mid}" y="{TOP - 40}" font-size="22" class="b" text-anchor="middle">Ship lean</text>'
+        f'<text x="{mid}" y="{TOP - 16}" font-size="15" class="mu mono" text-anchor="middle">n8n · Power Platform · APIs</text>'
+        f'<text x="{mid}" y="{BOT + 42}" font-size="22" class="b" text-anchor="middle">Ship guarded</text>'
+        f'<text x="{mid}" y="{BOT + 66}" font-size="15" class="mu mono" text-anchor="middle">MCP agents · tests · telemetry</text>'
+        f'<text x="{GATE + 50}" y="{(TOP + MID) / 2 + 2}" font-size="15" class="mu mono">no</text>'
+        f'<text x="{GATE + 50}" y="{(BOT + MID) / 2 + 10}" font-size="15" class="mu mono">yes</text>')
+    gate = (f'<rect x="{GATE - 13}" y="{MID - 13}" width="26" height="26" fill="{pen}" transform="rotate(45 {GATE} {MID})"/>'
+            f'<text x="{GATE - 26}" y="{MID - 22}" font-size="15" class="mu mono" text-anchor="end">financial data?</text>')
+    # one route at a time: lean, then guarded, then repeat
+    pulses = "".join(
+        f'<circle r="11" fill="{pen}" opacity="0.18"><animateMotion path="{p}" dur="{T}s" begin="{b}" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.5;1" calcMode="linear"/></circle>'
+        f'<circle r="5" fill="{pen}"><animateMotion path="{p}" dur="{T}s" begin="{b}" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.5;1" calcMode="linear"/></circle>'
+        for p, b in [(LEAN, "0s"), (GUARD, f"{T / 2}s")])
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
-<title>How the work moves: discover, map in BPMN, prove it live, then ship lean or guarded depending on financial data, and measure the hours returned</title>
+<title>How the work moves: discover, map in BPMN, prove with a live POC, then ship lean with n8n, Power Platform or APIs, or ship guarded with MCP agents, tests and telemetry when financial data is involved, and measure the hours returned</title>
 <style>{style(c)}</style>
-{grid}
-{''.join(snake)}
-{''.join(nodes)}
+<path d="{LEAN}" fill="none" stroke="{line}" stroke-width="2"/>
+<path d="{GUARD}" fill="none" stroke="{line}" stroke-width="2"/>
+{pulses}
+{steps}{branches}{gate}
 </svg>
 """
 
@@ -111,4 +60,4 @@ def svg(c):
 for name, c in THEMES.items():
     p = ROOT / "assets" / f"flow-{name}.svg"
     p.write_text(svg(c))
-    print(p.name, round(p.stat().st_size / 1024), "KB", f"loop {T:.1f}s")
+    print(p.name, round(p.stat().st_size / 1024, 1), "KB")

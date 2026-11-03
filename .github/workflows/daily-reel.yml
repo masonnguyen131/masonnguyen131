@@ -1,6 +1,6 @@
 name: Daily reel
 
-# Every morning in Melbourne: print a fresh call sheet and re-cut the contribution reel.
+# Every morning in Melbourne: reprint the terminal and re-cut the contribution reel.
 on:
   schedule:
     - cron: "0 19 * * *" # 06:00 AEDT / 05:00 AEST
@@ -18,16 +18,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Print the call sheet
-        run: python3 scripts/callsheet.py dist
+      - name: Reprint the terminal
+        run: python3 scripts/terminal.py dist
 
       - name: Cut the contribution reel
         uses: Platane/snk@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/reel-light.svg?color_snake=#4F2BFF&color_dots=#E3E1DC,#D9D0FF,#B3A4FF,#7F66FF,#4F2BFF
-            dist/reel-dark.svg?color_snake=#8F7BFF&color_dots=#1C1B19,#2A2347,#3F3192,#5E45E0,#8F7BFF&color_dot_border=#131211
+            dist/reel-light.svg?color_snake=#4F2BFF&color_dots=#EBEDF0,#D9D0FF,#B3A4FF,#7F66FF,#4F2BFF
+            dist/reel-dark.svg?color_snake=#8F7BFF&color_dots=#151B23,#2A2347,#3F3192,#5E45E0,#8F7BFF&color_dot_border=#0D1117
 
       - name: Publish to the output branch
         uses: crazy-max/ghaction-github-pages@v4
