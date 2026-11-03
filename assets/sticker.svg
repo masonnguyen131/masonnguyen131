@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <title>Mason sticker</title>
+  <defs>
+    <clipPath id="disc"><circle cx="200" cy="200" r="166"/></clipPath>
+    <filter id="drop" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#151413" flood-opacity="0.28"/></filter>
+  </defs>
+  <g filter="url(#drop)"><circle cx="200" cy="200" r="182" fill="#fffdf8"/></g>
+  <circle cx="200" cy="200" r="166" fill="#FF5B1F"/>
+  <g clip-path="url(#disc)" stroke="#151413" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- rays -->
+    <g stroke="#FFB08F" stroke-width="10" opacity="0.6">
+      <path d="M200 30 V60 M80 80 l22 22 M320 80 l-22 22 M40 200 h30 M360 200 h-30"/>
+    </g>
+    <!-- shirt -->
+    <path d="M70 420 C80 345 120 318 200 312 C280 318 320 345 330 420 Z" fill="#fffdf8"/>
+    <path d="M200 330 L162 300 L150 336 L186 352 Z M200 330 L238 300 L250 336 L214 352 Z" fill="#fffdf8"/>
+    <!-- neck -->
+    <path d="M172 262 V306 L200 332 L228 306 V262 Z" fill="#EDB48B"/>
+    <!-- ears -->
+    <ellipse cx="122" cy="206" rx="15" ry="22" fill="#F2C29B"/>
+    <ellipse cx="278" cy="206" rx="15" ry="22" fill="#F2C29B"/>
+    <!-- face -->
+    <path d="M126 170 C124 240 150 290 200 292 C250 290 276 240 274 170 C270 130 240 110 200 110 C160 110 130 130 126 170 Z" fill="#F2C29B"/>
+    <!-- hair -->
+    <path d="M114 200 C98 136 126 72 200 68 C274 66 306 120 288 200 C284 178 278 164 268 154 C254 164 240 162 228 152 C214 164 194 166 178 156 C164 166 148 164 140 152 C130 164 120 180 114 200 Z" fill="#151413"/>
+    <path d="M160 134 C184 126 204 112 220 92" fill="none" stroke="#3a3936" stroke-width="4"/>
+    <!-- brows -->
+    <path d="M152 176 Q168 170 184 175 M216 175 Q232 170 248 176" fill="none" stroke-width="7"/>
+    <!-- smiling eyes -->
+    <path d="M156 202 Q168 192 180 202 M220 202 Q232 192 244 202" fill="none" stroke-width="6"/>
+    <!-- nose and smile -->
+    <path d="M200 210 Q195 228 202 234" fill="none" stroke-width="5"/>
+    <path d="M178 254 Q200 270 224 252" fill="none" stroke-width="6"/>
+    <!-- blush -->
+    <g stroke="none" fill="#FF5B1F" opacity="0.28"><ellipse cx="156" cy="232" rx="14" ry="8"/><ellipse cx="246" cy="232" rx="14" ry="8"/></g>
+  </g>
+  <circle cx="200" cy="200" r="166" fill="none" stroke="#151413" stroke-width="6"/>
+  <!-- signature -->
+  <g transform="rotate(-8 300 330)">
+    <rect x="236" y="306" width="132" height="46" rx="23" fill="#151413" stroke="#fffdf8" stroke-width="10" paint-order="stroke"/>
+    <text x="302" y="337" text-anchor="middle" font-family="'Brush Script MT','Snell Roundhand',cursive" font-size="30" fill="#fffdf8">Mason</text>
+  </g>
+</svg>
