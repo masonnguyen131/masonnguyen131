@@ -1,84 +1,77 @@
-"""GitHub profile header: a still from the portfolio hero.
-
-Same palette and type as masonportfolio.vercel.app (fonts embedded so GitHub renders them),
-faint drifting contour lines, and one ember dot travelling a contour.
-Usage: python3 scripts/header.py   (writes assets/header-dark.svg and assets/header-light.svg)
-"""
-import base64
-import math
+"""Profile header: a contribution graph whose cells spell MASON, then fade and redraw.
+Writes assets/header-{light,dark}.svg. Usage: python3 scripts/header.py"""
+import random
 from pathlib import Path
 
+from theme import THEMES, style
+
 ROOT = Path(__file__).resolve().parent.parent
-out = ROOT / "assets"
-FONTS = {
-    "Geist": ROOT / "assets/fonts/geist.woff2",
-    "GeistMono": ROOT / "assets/fonts/geist-mono.woff2",
-    "Serif": ROOT / "assets/fonts/instrument-serif-italic.woff2",
+COLS, ROWS, PITCH, CELL = 53, 7, 20, 16
+X0, Y0 = 70, 96
+W, H = 1200, 300
+T = 12  # seconds per loop
+GLYPHS = {
+    "M": ["10001", "11011", "10101", "10101", "10001", "10001", "10001"],
+    "A": ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
+    "S": ["01111", "10000", "10000", "01110", "00001", "00001", "11110"],
+    "O": ["01110", "10001", "10001", "10001", "10001", "10001", "01110"],
+    "N": ["10001", "11001", "10101", "10011", "10001", "10001", "10001"],
 }
-font_css = "".join(
-    f"@font-face{{font-family:'{name}';src:url(data:font/woff2;base64,{base64.b64encode(p.read_bytes()).decode()}) format('woff2');}}"
-    for name, p in FONTS.items()
-)
-
-THEMES = {
-    "dark": dict(bg="#0A0A0B", fg="#EDE8DF", mute="#8B867D", line="#EDE8DF"),
-    "light": dict(bg="#EFEAE1", fg="#151413", mute="#6D685F", line="#151413"),
-}
-EMBER = "#FF5B1F"
-W, H = 1200, 400
+MONTHS = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"]
 
 
-def contour(i):
-    pts = []
-    for x in range(-200, W + 201, 20):
-        y = 18 + i * 26
-        y += 16 * math.sin(x / 190 + i * 0.22) + 8 * math.sin(x / 83 + i * 0.35)
-        y -= 70 * math.exp(-(((x - 900) / 210) ** 2)) * math.exp(-(((i - 7) / 5) ** 2))  # a hill on the right
-        pts.append(f"{x},{y:.1f}")
-    return "M" + " L".join(pts)
+def letters(word="MASON"):
+    start = (COLS - (len(word) * 6 - 1)) // 2
+    lit = {}
+    rng = random.Random(7)
+    for i, ch in enumerate(word):
+        for r, row in enumerate(GLYPHS[ch]):
+            for k, bit in enumerate(row):
+                if bit == "1":
+                    lit[(start + i * 6 + k, r)] = rng.choice([3, 4, 4, 4])
+    return lit, start
 
 
 def svg(c):
-    lines = "\n".join(
-        f'<path id="c{i}" d="{contour(i)}" fill="none" stroke="{c["line"]}" stroke-width="{1.2 if i % 5 == 0 else 0.8}" opacity="{0.22 if i % 5 == 0 else 0.1}"/>'
-        for i in range(17)
-    )
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
-<title>Mason Nguyen: Applied AI and automation</title>
-<style>{font_css}
-.mono{{font-family:'GeistMono',ui-monospace,monospace;font-size:13px;letter-spacing:1.2px;fill:{c['mute']}}}
-.big{{font-family:'Geist',system-ui,sans-serif;font-weight:500;fill:{c['fg']}}}
-.serif{{font-family:'Serif',Georgia,serif;font-style:italic;fill:{c['fg']}}}
-</style>
-<defs>
-  <clipPath id="frame"><rect width="{W}" height="{H}" rx="18"/></clipPath>
-  <linearGradient id="fade" x1="0" x2="1"><stop offset="0.25" stop-color="{c['bg']}" stop-opacity="0.92"/><stop offset="0.65" stop-color="{c['bg']}" stop-opacity="0"/></linearGradient>
-  <radialGradient id="glow"><stop offset="0" stop-color="{EMBER}" stop-opacity="0.55"/><stop offset="1" stop-color="{EMBER}" stop-opacity="0"/></radialGradient>
-</defs>
-<g clip-path="url(#frame)">
-  <rect width="{W}" height="{H}" fill="{c['bg']}"/>
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0 0; -60 6; 0 0" dur="40s" repeatCount="indefinite"/>
-    {lines}
-    <circle r="22" fill="url(#glow)"><animateMotion dur="14s" repeatCount="indefinite" rotate="auto"><mpath xlink:href="#c7"/></animateMotion></circle>
-    <circle r="4.5" fill="{EMBER}"><animateMotion dur="14s" repeatCount="indefinite"><mpath xlink:href="#c7"/></animateMotion></circle>
-  </g>
-  <rect width="{W}" height="{H}" fill="url(#fade)"/>
-  <g>
-    <animate attributeName="opacity" from="0" to="1" dur="1.2s"/>
-    <text x="56" y="70" class="mono">(01) APPLIED AI &amp; AUTOMATION</text>
-    <text x="50" y="204" class="big" font-size="128" letter-spacing="-7">Mason</text>
-    <text x="150" y="320" class="serif" font-size="132" letter-spacing="-2">Nguyen</text>
-    <text x="56" y="366" class="mono">MELBOURNE  ·  NOW AT REDBRIDGE CAPITAL  ·  5 OF 5 POCS LIVE</text>
-  </g>
-  <circle cx="{W - 64}" cy="66" r="4" fill="{EMBER}"><animate attributeName="opacity" values="1;0.15;1" dur="1.6s" calcMode="discrete" keyTimes="0;0.5;1" repeatCount="indefinite"/></circle>
-  <text x="{W - 78}" y="70" class="mono" text-anchor="end">SC 01 · OPENING</text>
-</g>
+    d = c["dots"]
+    lit, start = letters()
+    rng = random.Random(42)
+    cells = []
+    for col in range(COLS):
+        for row in range(ROWS):
+            x, y = X0 + col * PITCH, Y0 + row * PITCH
+            if (col, row) in lit:
+                on = (0.4 + (col - start) * 0.06) / T
+                off = (10.4 + (col - start) * 0.02) / T
+                lv = d[lit[(col, row)]]
+                anim = (f'<animate attributeName="fill" values="{d[0]};{d[0]};{lv};{lv};{d[0]};{d[0]}" '
+                        f'keyTimes="0;{on:.3f};{on + 0.03:.3f};{off:.3f};{off + 0.03:.3f};1" dur="{T}s" repeatCount="indefinite"/>')
+                cells.append(f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="3" fill="{lv}">{anim}</rect>')
+            else:
+                lv = rng.choices([0, 1], [93, 7])[0]
+                cells.append(f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="3" fill="{d[lv]}"/>')
+    months = "".join(f'<text x="{X0 + i * 4.42 * PITCH:.0f}" y="{Y0 - 12}" class="mu" font-size="12">{m}</text>'
+                     for i, m in enumerate(MONTHS))
+    days = "".join(f'<text x="{X0 - 12}" y="{Y0 + r * PITCH + 12}" class="mu" font-size="12" text-anchor="end">{n}</text>'
+                   for r, n in [(1, "Mon"), (3, "Wed"), (5, "Fri")])
+    legend_x = X0 + COLS * PITCH - 4 - 5 * 15 - 34
+    legend = "".join(f'<rect x="{legend_x + i * 15}" y="{H - 44}" width="11" height="11" rx="2" fill="{d[i]}"/>' for i in range(5))
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
+<title>Mason Nguyen: applied AI and automation, Melbourne</title>
+<style>{style(c)}</style>
+<text x="8" y="22" font-size="16"><tspan class="b">5 of 5</tspan> automation POCs shipped to production in the last four months</text>
+<rect x="0.5" y="40.5" width="{W - 1}" height="{H - 41}" rx="6" fill="{c['bg']}" stroke="{c['border']}"/>
+{months}{days}
+{''.join(cells)}
+<text x="{X0 - 30}" y="{H - 34}" class="mu" font-size="12">Mason Nguyen · Applied AI and automation · Melbourne, Australia</text>
+<text x="{legend_x - 6}" y="{H - 34}" class="mu" font-size="12" text-anchor="end">Less</text>
+{legend}
+<text x="{legend_x + 5 * 15 + 2}" y="{H - 34}" class="mu" font-size="12">More</text>
 </svg>
 """
 
 
-out.mkdir(parents=True, exist_ok=True)
 for name, c in THEMES.items():
-    (out / f"header-{name}.svg").write_text(svg(c))
-    print(name, round((out / f"header-{name}.svg").stat().st_size / 1024), "KB")
+    p = ROOT / "assets" / f"header-{name}.svg"
+    p.write_text(svg(c))
+    print(p.name, round(p.stat().st_size / 1024), "KB")

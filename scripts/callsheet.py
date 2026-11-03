@@ -1,12 +1,10 @@
-"""Daily call sheet: a cinema-ticket SVG rebuilt every morning by GitHub Actions.
+"""Daily call sheet: a GitHub-style card rebuilt every morning by GitHub Actions.
 
 Melbourne weather and golden hour (Open-Meteo, no key), the day of the year,
 tonight's moon, and a rotating line from how I work.
 Standard library only. Usage: python3 scripts/callsheet.py <out_dir>
 """
-import base64
 import datetime as dt
-import hashlib
 import json
 import sys
 import urllib.request
@@ -14,14 +12,11 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 from zoneinfo import ZoneInfo
 
-ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from theme import EMBER, THEMES, style  # noqa: E402
+
 USER = "masonnguyen131"
 TZ = ZoneInfo("Australia/Melbourne")
-EMBER = "#FF5B1F"
-THEMES = {
-    "dark": dict(bg="#0A0A0B", card="#111113", fg="#EDE8DF", mute="#8B867D", line="#2A2927"),
-    "light": dict(bg="#EFEAE1", card="#F6F2EA", fg="#151413", mute="#6D685F", line="#D6D0C4"),
-}
 SCENES = [
     "Sit with the person closest to the problem.",
     "Draw it before building it.",
@@ -62,62 +57,39 @@ def moon(now):
     return names[int((age / 29.530588853) * 8 + 0.5) % 8]
 
 
-def fonts():
-    files = {"Geist": "geist.woff2", "GeistMono": "geist-mono.woff2", "Serif": "instrument-serif-italic.woff2"}
-    return "".join(
-        f"@font-face{{font-family:'{n}';src:url(data:font/woff2;base64,{base64.b64encode((ROOT / 'assets/fonts' / f).read_bytes()).decode()}) format('woff2');}}"
-        for n, f in files.items()
-    )
-
-
-def barcode(seed, x0, y0, width, height, color):
-    bits = hashlib.sha256(seed.encode()).digest()
-    bars, x = [], x0
-    for b in bits:
-        w = 1 + b % 4
-        if x + w > x0 + width:
-            break
-        if b % 3:
-            bars.append(f'<rect x="{x}" y="{y0}" width="{w}" height="{height}" fill="{color}"/>')
-        x += w + 1 + (b >> 5) % 3
-    return "".join(bars)
-
-
-def svg(c, f, today, doy, total, wx, golden, take, scene):
-    W, H, STUB = 1200, 380, 900
+def svg(c, today, stamp, doy, total, wx, golden, moon_phase, scene):
+    W, H, P = 1200, 330, 24
     e = escape
+    d = c["dots"]
+    cols = [("Weather", wx), ("Golden hour", golden), ("Tonight's moon", moon_phase)]
+    stats = "".join(
+        f'<text x="{P + i * 380}" y="112" font-size="12" class="mu">{k}</text>'
+        f'<text x="{P + i * 380}" y="142" font-size="22" class="b">{e(v)}</text>' for i, (k, v) in enumerate(cols))
+    bar_w = W - 2 * P
+    done = bar_w * doy / total
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
 <title>Call sheet for {e(today)}</title>
-<style>{f}
-.m{{font-family:'GeistMono',ui-monospace,monospace;font-size:13px;letter-spacing:1.2px;fill:{c['mute']}}}
-.v{{font-family:'Geist',system-ui,sans-serif;font-size:22px;fill:{c['fg']}}}
-.s{{font-family:'Serif',Georgia,serif;font-style:italic;fill:{c['fg']}}}
-</style>
-<defs><mask id="notch"><rect width="{W}" height="{H}" fill="#fff"/><circle cx="{STUB}" cy="0" r="18" fill="#000"/><circle cx="{STUB}" cy="{H}" r="18" fill="#000"/></mask></defs>
-<g mask="url(#notch)">
-  <rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="18" fill="{c['card']}" stroke="{c['line']}"/>
+<style>{style(c)}</style>
+<defs><clipPath id="box"><rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="6"/></clipPath></defs>
+<g clip-path="url(#box)">
+  <rect width="{W}" height="{H}" fill="{c['bg']}"/>
+  <rect width="{W}" height="56" fill="{c['subtle']}"/>
 </g>
-<line x1="{STUB}" y1="26" x2="{STUB}" y2="{H - 26}" stroke="{c['line']}" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round"/>
-
-<text x="48" y="58" class="m">CALL SHEET</text>
-<circle cx="168" cy="53" r="4" fill="{EMBER}"><animate attributeName="opacity" values="1;0.15;1" keyTimes="0;0.5;1" calcMode="discrete" dur="1.6s" repeatCount="indefinite"/></circle>
-<text x="{STUB - 48}" y="58" class="m" text-anchor="end">DAY {doy} / {total}</text>
-<text x="44" y="138" class="s" font-size="64">{e(today)}</text>
-<text x="48" y="172" class="m">ON LOCATION · MELBOURNE, AUSTRALIA</text>
-
-<line x1="48" y1="200" x2="{STUB - 48}" y2="200" stroke="{c['line']}"/>
-<text x="48" y="232" class="m">WEATHER</text><text x="48" y="262" class="v">{e(wx)}</text>
-<text x="330" y="232" class="m">GOLDEN HOUR</text><text x="330" y="262" class="v">{e(golden)}</text>
-<text x="600" y="232" class="m">NIGHT SHOOT</text><text x="600" y="262" class="v">{e(take)}</text>
-<line x1="48" y1="290" x2="{STUB - 48}" y2="290" stroke="{c['line']}"/>
-<text x="48" y="326" class="m">TODAY'S SCENE</text>
-<text x="48" y="352" class="s" font-size="26" fill="{EMBER}" style="fill:{EMBER}">{e(scene)}</text>
-
-<text x="{STUB + 150}" y="58" class="m" text-anchor="middle">ADMIT ONE</text>
-<text x="{STUB + 150}" y="160" class="s" font-size="84" text-anchor="middle" style="fill:{EMBER}">No. {doy}</text>
-<text x="{STUB + 150}" y="196" class="m" text-anchor="middle">SEASON {today[-4:]}</text>
-{barcode(today, STUB + 60, 232, 180, 64, c['fg'])}
-<text x="{STUB + 150}" y="330" class="m" text-anchor="middle">MASONPORTFOLIO.VERCEL.APP</text>
+<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="6" fill="none" stroke="{c['border']}"/>
+<line x1="0" y1="56.5" x2="{W}" y2="56.5" stroke="{c['border']}"/>
+<circle cx="{P + 6}" cy="28" r="5" fill="{EMBER}"><animate attributeName="opacity" values="1;0.25;1" dur="2s" repeatCount="indefinite"/></circle>
+<text x="{P + 20}" y="33" font-size="14"><tspan class="b">Call sheet</tspan><tspan class="mu">  ·  {e(today)}  ·  Melbourne, Australia</tspan></text>
+<text x="{W - P}" y="33" font-size="12" class="mu mono" text-anchor="end">printed {stamp} by daily-reel.yml</text>
+{stats}
+<line x1="0" y1="172.5" x2="{W}" y2="172.5" stroke="{c['border']}"/>
+<text x="{P}" y="206" font-size="12" class="mu">Today's line</text>
+<rect x="{P}" y="220" width="3" height="30" rx="1.5" fill="{EMBER}"/>
+<text x="{P + 16}" y="242" font-size="20">{e(scene)}</text>
+<line x1="0" y1="272.5" x2="{W}" y2="272.5" stroke="{c['border']}"/>
+<rect x="{P}" y="290" width="{bar_w}" height="8" rx="4" fill="{d[0]}"/>
+<rect x="{P}" y="290" width="{done:.1f}" height="8" rx="4" fill="{d[3]}"><animate attributeName="width" from="0" to="{done:.1f}" dur="1.6s" fill="freeze"/></rect>
+<text x="{P}" y="320" font-size="12" class="mu">Day {doy} of {total}</text>
+<text x="{W - P}" y="320" font-size="12" class="mu" text-anchor="end">{round(100 * doy / total)}% of {today[-4:]}</text>
 </svg>
 """
 
@@ -132,9 +104,8 @@ def main():
     wx, golden = weather()
     take = moon(now)
     scene = SCENES[doy % len(SCENES)]
-    f = fonts()
     for name, c in THEMES.items():
-        (out / f"callsheet-{name}.svg").write_text(svg(c, f, today, doy, total, wx, golden, take, scene))
+        (out / f"callsheet-{name}.svg").write_text(svg(c, today, f"{now:%H:%M %Z}", doy, total, wx, golden, take, scene))
     print(today, "|", wx, "|", golden, "|", take, "|", scene)
 
 
