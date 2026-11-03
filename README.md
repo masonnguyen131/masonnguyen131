@@ -1,6 +1,6 @@
-<img align="right" width="170" src="assets/avatar.svg" alt="Mason Nguyen: photo that flips to an illustrated sticker" />
+<img align="right" width="200" src="assets/sticker.svg" alt="Sticker of Mason waving, with a little robot agent and sparkles" />
 
-## Hi, I'm Mason
+### Hi, I'm Mason
 
 I build automation that teams trust enough to make real decisions on. I sit with the people closest to a workflow, find the real bottleneck, design the fix, deploy it and measure what it saves them. Lately that means **agentic workforces with guardrails**, so the work gets faster without getting riskier.
 
